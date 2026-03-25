@@ -1,16 +1,49 @@
 import { useState } from 'react'
-import { User, Lock, Bell, Database, Shield, Users } from 'lucide-react'
+import { User, Lock, Bell, Database, Users } from 'lucide-react'
 
 const sections = [
-  { id: 'profile', icon: User, label: 'Profile' },
-  { id: 'security', icon: Lock, label: 'Security' },
-  { id: 'notifications', icon: Bell, label: 'Notifications' },
-  { id: 'farm', icon: Database, label: 'Farm Settings' },
-  { id: 'users', icon: Users, label: 'Team & Roles' },
+  { id: 'profile',       icon: User,     label: 'Profile'        },
+  { id: 'security',      icon: Lock,     label: 'Security'       },
+  { id: 'notifications', icon: Bell,     label: 'Notifications'  },
+  { id: 'farm',          icon: Database, label: 'Farm Settings'  },
+  { id: 'users',         icon: Users,    label: 'Team & Roles'   },
 ]
+
+function Toggle({ enabled, onChange }) {
+  return (
+    <div
+      className="toggle-track"
+      style={{ background: enabled ? '#237227' : '#dddabd' }}
+      onClick={onChange}
+    >
+      <div
+        className="toggle-thumb"
+        style={{ left: enabled ? 21 : 3 }}
+      />
+    </div>
+  )
+}
 
 export default function Settings() {
   const [activeSection, setActiveSection] = useState('profile')
+  const [twoFAEnabled, setTwoFAEnabled] = useState(false)
+  const [notifications, setNotifications] = useState({
+    environmental: true,
+    mortality:     true,
+    delivery:      true,
+    forecast:      false,
+    daily:         true,
+    feeding:       false,
+  })
+
+  const notifItems = [
+    { key: 'environmental', title: 'Environmental Alerts',  desc: 'Temp, humidity, ammonia threshold breaches'         },
+    { key: 'mortality',     title: 'Mortality Alerts',      desc: 'Unusual death counts detected by AI'                },
+    { key: 'delivery',      title: 'Delivery Updates',      desc: 'Order status changes and driver notifications'      },
+    { key: 'forecast',      title: 'AI Forecast Ready',     desc: 'When new 10-day yield predictions are available'    },
+    { key: 'daily',         title: 'Daily Summary',         desc: 'End-of-day report via email'                        },
+    { key: 'feeding',       title: 'Feeding Reminders',     desc: 'Scheduled feed time notifications'                  },
+  ]
 
   return (
     <div>
@@ -19,28 +52,28 @@ export default function Settings() {
         <div className="page-desc">Manage your account, farm configuration, and team permissions</div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '210px 1fr', gap: 18 }}>
         {/* Settings nav */}
         <div style={{
-          background: '#fff', borderRadius: 16, padding: '12px',
-          border: '1px solid #e8ede8', height: 'fit-content'
+          background: '#fff', borderRadius: 14, padding: '10px',
+          border: '1px solid #dddabd', height: 'fit-content'
         }}>
           {sections.map(s => (
             <button
               key={s.id}
               onClick={() => setActiveSection(s.id)}
               style={{
-                width: '100%', display: 'flex', alignItems: 'center', gap: 10,
-                padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
+                width: '100%', display: 'flex', alignItems: 'center', gap: 9,
+                padding: '9px 11px', borderRadius: 9, cursor: 'pointer',
                 border: 'none',
-                background: activeSection === s.id ? '#f0f7f0' : 'transparent',
-                color: activeSection === s.id ? '#1e5e23' : '#5a7a5c',
+                background: activeSection === s.id ? 'rgba(35,114,39,0.08)' : 'transparent',
+                color:      activeSection === s.id ? '#237227' : '#5e7a61',
                 fontWeight: activeSection === s.id ? 600 : 400,
-                fontSize: '0.85rem', textAlign: 'left',
-                fontFamily: 'DM Sans, sans-serif', transition: 'all 0.15s'
+                fontSize: '0.84rem', textAlign: 'left',
+                fontFamily: 'Inter, sans-serif', transition: 'all 0.15s'
               }}
             >
-              <s.icon size={16} />
+              <s.icon size={15} />
               {s.label}
             </button>
           ))}
@@ -48,33 +81,34 @@ export default function Settings() {
 
         {/* Settings content */}
         <div>
+          {/* ── Profile ── */}
           {activeSection === 'profile' && (
             <div className="chart-card">
-              <div className="section-title" style={{ marginBottom: 4 }}>Profile Information</div>
-              <div style={{ fontSize: '0.78rem', color: '#7a917b', marginBottom: 24 }}>
+              <div className="section-title" style={{ marginBottom: 3 }}>Profile Information</div>
+              <div style={{ fontSize: '0.78rem', color: '#5e7a61', marginBottom: 22, lineHeight: 1.55 }}>
                 Update your personal details and contact information
               </div>
 
               {/* Avatar */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28, paddingBottom: 24, borderBottom: '1px solid #f0f5f0' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, paddingBottom: 22, borderBottom: '1px solid #edebd6' }}>
                 <div style={{
-                  width: 64, height: 64, borderRadius: 16,
-                  background: 'linear-gradient(135deg, #2e7d34, #84be88)',
+                  width: 62, height: 62, borderRadius: 14,
+                  background: 'linear-gradient(135deg, #237227, #84be88)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '1.4rem', color: '#fff'
+                  fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: '1.35rem', color: '#fff'
                 }}>AK</div>
                 <div>
-                  <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '1rem', color: '#0a260d' }}>
+                  <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: '0.98rem', color: '#0d1f0e' }}>
                     Akpalolo Dennis Etornam
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: '#7a917b', marginTop: 2 }}>Farm Manager · GCTU</div>
-                  <button className="btn-outline" style={{ marginTop: 10, padding: '5px 14px', fontSize: '0.75rem' }}>
+                  <div style={{ fontSize: '0.79rem', color: '#8da58f', marginTop: 2 }}>Farm Manager · GCTU</div>
+                  <button className="btn-outline" style={{ marginTop: 9, padding: '5px 13px', fontSize: '0.74rem' }}>
                     Change Photo
                   </button>
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, maxWidth: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, maxWidth: 580 }}>
                 <div className="form-group">
                   <label className="form-label">First Name</label>
                   <input className="form-input" defaultValue="Akpalolo Dennis" />
@@ -106,18 +140,19 @@ export default function Settings() {
                 </div>
               </div>
 
-              <button className="btn-primary" style={{ marginTop: 8 }}>Save Changes</button>
+              <button className="btn-primary" style={{ marginTop: 4 }}>Save Changes</button>
             </div>
           )}
 
+          {/* ── Security ── */}
           {activeSection === 'security' && (
             <div className="chart-card">
-              <div className="section-title" style={{ marginBottom: 4 }}>Security Settings</div>
-              <div style={{ fontSize: '0.78rem', color: '#7a917b', marginBottom: 24 }}>
+              <div className="section-title" style={{ marginBottom: 3 }}>Security Settings</div>
+              <div style={{ fontSize: '0.78rem', color: '#5e7a61', marginBottom: 22, lineHeight: 1.55 }}>
                 Manage your password and two-factor authentication
               </div>
 
-              <div style={{ maxWidth: 480 }}>
+              <div style={{ maxWidth: 460 }}>
                 <div className="form-group">
                   <label className="form-label">Current Password</label>
                   <input className="form-input" type="password" placeholder="••••••••" />
@@ -133,84 +168,67 @@ export default function Settings() {
                 <button className="btn-primary">Update Password</button>
               </div>
 
-              <div style={{ marginTop: 28, paddingTop: 24, borderTop: '1px solid #f0f5f0' }}>
-                <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0a260d', marginBottom: 14 }}>
+              <div style={{ marginTop: 26, paddingTop: 22, borderTop: '1px solid #edebd6' }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#0d1f0e', marginBottom: 12 }}>
                   Two-Factor Authentication
                 </div>
                 <div style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  background: '#f0f7f0', borderRadius: 12, padding: '14px 18px', border: '1px solid #b5dab7'
+                  background: 'rgba(35,114,39,0.06)', borderRadius: 11, padding: '14px 16px',
+                  border: '1px solid rgba(35,114,39,0.15)'
                 }}>
                   <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 500, color: '#0a260d' }}>Enable 2FA via SMS</div>
-                    <div style={{ fontSize: '0.75rem', color: '#5a7a5c' }}>Receive a code on your phone at each login</div>
+                    <div style={{ fontSize: '0.84rem', fontWeight: 500, color: '#0d1f0e' }}>Enable 2FA via SMS</div>
+                    <div style={{ fontSize: '0.74rem', color: '#5e7a61', marginTop: 2, lineHeight: 1.5 }}>Receive a code on your phone at each login</div>
                   </div>
-                  <div style={{
-                    width: 42, height: 24, borderRadius: 12, background: '#e2e8e2',
-                    cursor: 'pointer', position: 'relative', transition: 'background 0.2s'
-                  }} />
+                  <Toggle enabled={twoFAEnabled} onChange={() => setTwoFAEnabled(v => !v)} />
                 </div>
               </div>
             </div>
           )}
 
+          {/* ── Notifications ── */}
           {activeSection === 'notifications' && (
             <div className="chart-card">
-              <div className="section-title" style={{ marginBottom: 4 }}>Notification Preferences</div>
-              <div style={{ fontSize: '0.78rem', color: '#7a917b', marginBottom: 24 }}>
+              <div className="section-title" style={{ marginBottom: 3 }}>Notification Preferences</div>
+              <div style={{ fontSize: '0.78rem', color: '#5e7a61', marginBottom: 22, lineHeight: 1.55 }}>
                 Choose what alerts you receive and how
               </div>
 
-              {[
-                { title: 'Environmental Alerts', desc: 'Temp, humidity, ammonia threshold breaches', enabled: true },
-                { title: 'Mortality Alerts', desc: 'Unusual death counts detected by AI', enabled: true },
-                { title: 'Delivery Updates', desc: 'Order status changes and driver notifications', enabled: true },
-                { title: 'AI Forecast Ready', desc: 'When new 10-day yield predictions are available', enabled: false },
-                { title: 'Daily Summary', desc: 'End-of-day report via email', enabled: true },
-                { title: 'Feeding Reminders', desc: 'Scheduled feed time notifications', enabled: false },
-              ].map((n, i) => (
-                <div key={i} style={{
+              {notifItems.map((n, i) => (
+                <div key={n.key} style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '14px 0', borderBottom: i < 5 ? '1px solid #f0f5f0' : 'none'
+                  padding: '13px 0', borderBottom: i < notifItems.length - 1 ? '1px solid #edebd6' : 'none'
                 }}>
                   <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 500, color: '#0a260d' }}>{n.title}</div>
-                    <div style={{ fontSize: '0.75rem', color: '#7a917b', marginTop: 2 }}>{n.desc}</div>
+                    <div style={{ fontSize: '0.845rem', fontWeight: 500, color: '#0d1f0e' }}>{n.title}</div>
+                    <div style={{ fontSize: '0.74rem', color: '#5e7a61', marginTop: 2, lineHeight: 1.45 }}>{n.desc}</div>
                   </div>
-                  <div style={{
-                    width: 42, height: 24, borderRadius: 12,
-                    background: n.enabled ? '#2e7d34' : '#e2e8e2',
-                    cursor: 'pointer', position: 'relative',
-                    transition: 'background 0.2s'
-                  }}>
-                    <div style={{
-                      position: 'absolute', top: 3,
-                      left: n.enabled ? 21 : 3,
-                      width: 18, height: 18, borderRadius: '50%',
-                      background: '#fff', transition: 'left 0.2s',
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.15)'
-                    }} />
-                  </div>
+                  <Toggle
+                    enabled={notifications[n.key]}
+                    onChange={() => setNotifications(prev => ({ ...prev, [n.key]: !prev[n.key] }))}
+                  />
                 </div>
               ))}
             </div>
           )}
 
+          {/* ── Farm Settings ── */}
           {activeSection === 'farm' && (
             <div className="chart-card">
-              <div className="section-title" style={{ marginBottom: 4 }}>Farm Configuration</div>
-              <div style={{ fontSize: '0.78rem', color: '#7a917b', marginBottom: 24 }}>
+              <div className="section-title" style={{ marginBottom: 3 }}>Farm Configuration</div>
+              <div style={{ fontSize: '0.78rem', color: '#5e7a61', marginBottom: 22, lineHeight: 1.55 }}>
                 Set thresholds for IoT sensor alerts and farm parameters
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, maxWidth: 560 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, maxWidth: 540 }}>
                 {[
-                  { label: 'Max Temperature (°C)', val: '32' },
-                  { label: 'Min Temperature (°C)', val: '18' },
-                  { label: 'Max Humidity (%)', val: '75' },
-                  { label: 'Max Ammonia (ppm)', val: '20' },
-                  { label: 'Daily Egg Target', val: '1200' },
-                  { label: 'Alert Mortality Threshold', val: '3' },
+                  { label: 'Max Temperature (°C)',      val: '32'   },
+                  { label: 'Min Temperature (°C)',      val: '18'   },
+                  { label: 'Max Humidity (%)',           val: '75'   },
+                  { label: 'Max Ammonia (ppm)',          val: '20'   },
+                  { label: 'Daily Egg Target',           val: '1200' },
+                  { label: 'Alert Mortality Threshold',  val: '3'    },
                 ].map((f, i) => (
                   <div className="form-group" key={i} style={{ marginBottom: 0 }}>
                     <label className="form-label">{f.label}</label>
@@ -219,10 +237,11 @@ export default function Settings() {
                 ))}
               </div>
 
-              <button className="btn-primary" style={{ marginTop: 24 }}>Save Farm Config</button>
+              <button className="btn-primary" style={{ marginTop: 22 }}>Save Farm Config</button>
             </div>
           )}
 
+          {/* ── Team & Roles ── */}
           {activeSection === 'users' && (
             <div className="chart-card">
               <div className="section-header">
@@ -230,55 +249,57 @@ export default function Settings() {
                   <div className="section-title">Team & Roles</div>
                   <div className="section-sub">Manage team member access and permissions</div>
                 </div>
-                <button className="btn-primary" style={{ fontSize: '0.8rem', padding: '8px 16px' }}>
+                <button className="btn-primary" style={{ fontSize: '0.8rem', padding: '7px 14px' }}>
                   + Invite Member
                 </button>
               </div>
 
-              <table className="data-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Student ID</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                    <th>Last Login</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { name: 'Akpalolo Dennis', id: '4231230019', role: 'Admin / Manager', status: 'Active', login: 'Today' },
-                    { name: 'Benedict Opoku', id: '4231230083', role: 'Developer', status: 'Active', login: 'Yesterday' },
-                    { name: 'Kenneth Mensah', id: '4231230106', role: 'Developer', status: 'Active', login: '2 days ago' },
-                  ].map((u, i) => (
-                    <tr key={i}>
-                      <td style={{ fontWeight: 500 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                          <div style={{
-                            width: 30, height: 30, borderRadius: 8,
-                            background: 'linear-gradient(135deg, #2e7d34, #84be88)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontFamily: 'Syne', fontWeight: 800, fontSize: '0.7rem', color: '#fff'
-                          }}>
-                            {u.name.split(' ').map(n => n[0]).join('')}
-                          </div>
-                          {u.name}
-                        </div>
-                      </td>
-                      <td style={{ color: '#5a7a5c', fontFamily: 'Syne, sans-serif', fontSize: '0.78rem' }}>{u.id}</td>
-                      <td><span className="badge badge-green">{u.role}</span></td>
-                      <td><span className="badge badge-green">{u.status}</span></td>
-                      <td style={{ color: '#7a917b', fontSize: '0.82rem' }}>{u.login}</td>
-                      <td>
-                        <button className="btn-outline" style={{ padding: '4px 12px', fontSize: '0.75rem' }}>
-                          Edit
-                        </button>
-                      </td>
+              <div className="table-wrapper">
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Student ID</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Last Login</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {[
+                      { name: 'Akpalolo Dennis', id: '4231230019', role: 'Admin / Manager', status: 'Active', login: 'Today'      },
+                      { name: 'Benedict Opoku',  id: '4231230083', role: 'Developer',       status: 'Active', login: 'Yesterday'  },
+                      { name: 'Kenneth Mensah',  id: '4231230106', role: 'Developer',       status: 'Active', login: '2 days ago' },
+                    ].map((u, i) => (
+                      <tr key={i}>
+                        <td style={{ fontWeight: 500 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+                            <div style={{
+                              width: 30, height: 30, borderRadius: 8,
+                              background: 'linear-gradient(135deg, #237227, #84be88)',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: '0.68rem', color: '#fff'
+                            }}>
+                              {u.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            {u.name}
+                          </div>
+                        </td>
+                        <td style={{ color: '#5e7a61', fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.78rem' }}>{u.id}</td>
+                        <td><span className="badge badge-green">{u.role}</span></td>
+                        <td><span className="badge badge-green">{u.status}</span></td>
+                        <td style={{ color: '#8da58f', fontSize: '0.82rem' }}>{u.login}</td>
+                        <td>
+                          <button className="btn-outline" style={{ padding: '4px 11px', fontSize: '0.74rem' }}>
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>

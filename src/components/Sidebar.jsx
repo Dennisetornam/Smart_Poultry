@@ -1,15 +1,15 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, BookOpen, BarChart2, Truck,
   FileText, Settings, LogOut, Leaf
 } from 'lucide-react'
 
 const navItems = [
-  { label: 'Dashboard', icon: LayoutDashboard, to: '/dashboard' },
-  { label: 'Farm Logbook', icon: BookOpen, to: '/logbook' },
-  { label: 'Analytics & AI', icon: BarChart2, to: '/analytics' },
-  { label: 'Deliveries', icon: Truck, to: '/deliveries' },
-  { label: 'Reports', icon: FileText, to: '/reports' },
+  { label: 'Dashboard',   icon: LayoutDashboard, to: '/dashboard' },
+  { label: 'Farm Logbook', icon: BookOpen,         to: '/logbook'   },
+  { label: 'Analytics & AI', icon: BarChart2,      to: '/analytics' },
+  { label: 'Deliveries',  icon: Truck,             to: '/deliveries'},
+  { label: 'Reports',     icon: FileText,          to: '/reports'   },
 ]
 
 const bottomItems = [
@@ -17,16 +17,18 @@ const bottomItems = [
 ]
 
 export default function Sidebar() {
+  const navigate = useNavigate()
+
   return (
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="brand">
-          <Leaf size={20} color="#84be88" />
+          <Leaf size={18} color="#FFAA00" />
           Smart<span style={{ color: '#84be88' }}>Poultry</span>
           <span className="dot" />
         </div>
-        <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', marginTop: 4, paddingLeft: 30 }}>
+        <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.28)', marginTop: 4, paddingLeft: 26 }}>
           AI Farm Management
         </div>
       </div>
@@ -40,29 +42,29 @@ export default function Sidebar() {
             to={to}
             className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
           >
-            <Icon size={17} className="icon" />
+            <Icon size={16} className="icon" />
             {label}
           </NavLink>
         ))}
 
-        <div className="nav-section-label" style={{ marginTop: 16 }}>System</div>
+        <div className="nav-section-label" style={{ marginTop: 12 }}>System</div>
         {bottomItems.map(({ label, icon: Icon, to }) => (
           <NavLink
             key={to}
             to={to}
             className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
           >
-            <Icon size={17} className="icon" />
+            <Icon size={16} className="icon" />
             {label}
           </NavLink>
         ))}
 
         <div
           className="nav-item"
-          style={{ marginTop: 'auto', color: 'rgba(239,68,68,0.7)' }}
-          onClick={() => window.location.href = '/'}
+          style={{ marginTop: 'auto', color: 'rgba(239,68,68,0.75)' }}
+          onClick={() => navigate('/')}
         >
-          <LogOut size={17} className="icon" />
+          <LogOut size={16} className="icon" />
           Logout
         </div>
       </nav>

@@ -19,41 +19,39 @@ export default function Login() {
       {/* Left panel */}
       <div className="login-left">
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 10, marginBottom: 48
-          }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 44 }}>
             <div style={{
               width: 40, height: 40, borderRadius: 12,
-              background: 'rgba(132,190,136,0.2)',
-              border: '1px solid rgba(132,190,136,0.3)',
+              background: 'rgba(255,170,0,0.18)',
+              border: '1px solid rgba(255,170,0,0.28)',
               display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}>
-              <Leaf size={20} color="#84be88" />
+              <Leaf size={20} color="#FFAA00" />
             </div>
             <span style={{
-              fontFamily: 'Syne, sans-serif', fontSize: '1.2rem',
-              fontWeight: 800, color: '#fff', letterSpacing: '-0.02em'
+              fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.2rem',
+              fontWeight: 700, color: '#fff', letterSpacing: '-0.02em'
             }}>
               Smart<span style={{ color: '#84be88' }}>Poultry</span>
             </span>
           </div>
 
-          <div style={{ marginBottom: 32 }}>
+          <div style={{ marginBottom: 30 }}>
             <div style={{
               display: 'inline-block',
-              background: 'rgba(132,190,136,0.15)',
-              border: '1px solid rgba(132,190,136,0.25)',
+              background: 'rgba(255,170,0,0.15)',
+              border: '1px solid rgba(255,170,0,0.28)',
               borderRadius: 20, padding: '4px 14px',
-              fontSize: '0.72rem', color: '#84be88',
-              fontWeight: 500, letterSpacing: '0.06em',
-              textTransform: 'uppercase', marginBottom: 16
+              fontSize: '0.70rem', color: '#FFAA00',
+              fontWeight: 600, letterSpacing: '0.07em',
+              textTransform: 'uppercase', marginBottom: 14
             }}>
               AI-Driven Farm Intelligence
             </div>
 
             <h1 style={{
-              fontFamily: 'Syne, sans-serif', fontWeight: 800,
-              fontSize: '2.2rem', color: '#fff',
+              fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700,
+              fontSize: '2.1rem', color: '#fff',
               lineHeight: 1.15, letterSpacing: '-0.03em'
             }}>
               Smarter Poultry.<br />
@@ -61,18 +59,18 @@ export default function Login() {
             </h1>
 
             <p style={{
-              marginTop: 16, color: 'rgba(255,255,255,0.55)',
-              fontSize: '0.9rem', lineHeight: 1.6, maxWidth: 340
+              marginTop: 14, color: 'rgba(255,255,255,0.58)',
+              fontSize: '0.88rem', lineHeight: 1.65, maxWidth: 320
             }}>
               An integrated platform built for Ghanaian poultry farmers — from daily logging to AI-powered decision support.
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
             {features.map((f, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <CheckCircle2 size={16} color="#84be88" />
-                <span style={{ fontSize: '0.83rem', color: 'rgba(255,255,255,0.7)' }}>{f}</span>
+                <CheckCircle2 size={15} color="#FFAA00" />
+                <span style={{ fontSize: '0.83rem', color: 'rgba(255,255,255,0.72)' }}>{f}</span>
               </div>
             ))}
           </div>
@@ -80,7 +78,7 @@ export default function Login() {
 
         <div style={{
           position: 'relative', zIndex: 1,
-          color: 'rgba(255,255,255,0.25)', fontSize: '0.72rem'
+          color: 'rgba(255,255,255,0.22)', fontSize: '0.70rem'
         }}>
           © 2026 SmartPoultry · GCTU Final Year Project
         </div>
@@ -89,13 +87,13 @@ export default function Login() {
       {/* Right panel */}
       <div className="login-right">
         <div className="login-card">
-          <div style={{ marginBottom: 32 }}>
+          <div style={{ marginBottom: 28 }}>
             <h2 style={{
-              fontFamily: 'Syne, sans-serif', fontSize: '1.5rem',
-              fontWeight: 800, color: '#0a260d', letterSpacing: '-0.02em',
+              fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.45rem',
+              fontWeight: 700, color: '#0d1f0e', letterSpacing: '-0.02em',
               marginBottom: 6
             }}>Welcome back</h2>
-            <p style={{ fontSize: '0.875rem', color: '#7a917b' }}>
+            <p style={{ fontSize: '0.875rem', color: '#5e7a61', lineHeight: 1.55 }}>
               Sign in to access your farm dashboard
             </p>
           </div>
@@ -110,15 +108,15 @@ export default function Login() {
                   onClick={() => setRole(r)}
                   style={{
                     padding: '9px 14px',
-                    borderRadius: 10,
-                    border: role === r ? '1.5px solid #2e7d34' : '1.5px solid #dde8dd',
-                    background: role === r ? '#f0f7f0' : '#fff',
-                    color: role === r ? '#1e5e23' : '#7a917b',
-                    fontSize: '0.8rem',
+                    borderRadius: 9,
+                    border: role === r ? '1.5px solid #237227' : '1.5px solid #dddabd',
+                    background: role === r ? 'rgba(35,114,39,0.07)' : '#fff',
+                    color: role === r ? '#237227' : '#8da58f',
+                    fontSize: '0.82rem',
                     fontWeight: role === r ? 600 : 400,
                     cursor: 'pointer',
                     textTransform: 'capitalize',
-                    fontFamily: 'DM Sans, sans-serif',
+                    fontFamily: 'Inter, sans-serif',
                     transition: 'all 0.15s'
                   }}
                 >
@@ -151,10 +149,10 @@ export default function Login() {
               <button
                 onClick={() => setShowPass(!showPass)}
                 style={{
-                  position: 'absolute', right: 14, top: '50%',
+                  position: 'absolute', right: 13, top: '50%',
                   transform: 'translateY(-50%)',
                   background: 'none', border: 'none', cursor: 'pointer',
-                  color: '#7a917b'
+                  color: '#8da58f'
                 }}
               >
                 {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -164,20 +162,20 @@ export default function Login() {
 
           <div style={{
             display: 'flex', justifyContent: 'space-between',
-            alignItems: 'center', marginBottom: 24
+            alignItems: 'center', marginBottom: 22
           }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
-              <input type="checkbox" defaultChecked style={{ accentColor: '#2e7d34' }} />
-              <span style={{ fontSize: '0.8rem', color: '#5a7a5c' }}>Remember me</span>
+              <input type="checkbox" defaultChecked style={{ accentColor: '#237227', width: 14, height: 14 }} />
+              <span style={{ fontSize: '0.8rem', color: '#5e7a61' }}>Remember me</span>
             </label>
             <span style={{
-              fontSize: '0.8rem', color: '#2e7d34', cursor: 'pointer', fontWeight: 500
+              fontSize: '0.8rem', color: '#237227', cursor: 'pointer', fontWeight: 600
             }}>Forgot password?</span>
           </div>
 
           <button
             className="btn-primary"
-            style={{ width: '100%', justifyContent: 'center', padding: '13px' }}
+            style={{ width: '100%', justifyContent: 'center', padding: '12px' }}
             onClick={() => navigate('/dashboard')}
           >
             Sign In to Dashboard
@@ -185,12 +183,12 @@ export default function Login() {
           </button>
 
           <div style={{
-            marginTop: 24, padding: 14,
-            background: '#f0f7f0', borderRadius: 10,
-            border: '1px solid #dceedd'
+            marginTop: 20, padding: '12px 14px',
+            background: 'rgba(35,114,39,0.06)', borderRadius: 9,
+            border: '1px solid rgba(35,114,39,0.14)'
           }}>
-            <p style={{ fontSize: '0.75rem', color: '#5a7a5c', lineHeight: 1.5 }}>
-              <strong style={{ color: '#1e5e23' }}>Demo credentials:</strong> Use any email & password above. Select a role to see role-specific views.
+            <p style={{ fontSize: '0.75rem', color: '#5e7a61', lineHeight: 1.55 }}>
+              <strong style={{ color: '#237227' }}>Demo credentials:</strong> Use any email & password above. Select a role to see role-specific views.
             </p>
           </div>
         </div>
