@@ -57,10 +57,10 @@ export default function Dashboard() {
 
       {/* Stat cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 20 }}>
-        <StatCard label="Eggs Today"         value="1,240"  change="+4.2% vs yesterday"  positive        icon={Egg}          iconBg="rgba(35,114,39,0.10)"   iconColor="#237227" accent="#237227" />
-        <StatCard label="Mortality Rate"     value="0.08%"  change="+0.02% vs yesterday" positive={false} icon={HeartPulse}   iconBg="rgba(255,170,0,0.13)"   iconColor="#e09600" accent="#FFAA00" />
-        <StatCard label="Pending Deliveries" value="2"      change="GHS 13,500 value"     positive        icon={PackageCheck} iconBg="rgba(59,130,246,0.10)"  iconColor="#3b82f6" accent="#3b82f6" />
-        <StatCard label="Feed Used (Today)"  value="480 kg" change="-1.2% vs avg"         positive        icon={Wheat}        iconBg="rgba(132,190,136,0.18)" iconColor="#237227" accent="#84be88" />
+        <StatCard label="Eggs Today" value="1,240" change="+4.2% vs yesterday" positive icon={Egg} iconBg="rgba(35,114,39,0.10)" iconColor="#237227" accent="#237227" />
+        <StatCard label="Mortality Rate" value="0.08%" change="+0.02% vs yesterday" positive={false} icon={HeartPulse} iconBg="rgba(255,170,0,0.13)" iconColor="#e09600" accent="#FFAA00" />
+        <StatCard label="Pending Deliveries" value="2" change="GHS 13,500 value" positive icon={PackageCheck} iconBg="rgba(59,130,246,0.10)" iconColor="#3b82f6" accent="#3b82f6" />
+        <StatCard label="Feed Used (Today)" value="480 kg" change="-1.2% vs avg" positive icon={Wheat} iconBg="rgba(132,190,136,0.18)" iconColor="#237227" accent="#84be88" />
       </div>
 
       {/* Charts row */}
@@ -131,9 +131,9 @@ export default function Dashboard() {
           {/* Current readings */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 14 }}>
             {[
-              { label: 'Temperature', value: '29°C',   icon: Thermometer, color: '#ef4444', ok: true  },
-              { label: 'Humidity',    value: '76%',    icon: Droplets,    color: '#3b82f6', ok: false },
-              { label: 'Ammonia',     value: '17 ppm', icon: Wind,        color: '#FFAA00', ok: true  },
+              { label: 'Temperature', value: '29°C', icon: Thermometer, color: '#ef4444', ok: true },
+              { label: 'Humidity', value: '76%', icon: Droplets, color: '#3b82f6', ok: false },
+              { label: 'Ammonia', value: '17 ppm', icon: Wind, color: '#FFAA00', ok: true },
             ].map((s, i) => (
               <div key={i} style={{
                 background: '#F7F6E5', borderRadius: 10,
@@ -160,9 +160,9 @@ export default function Dashboard() {
               <XAxis dataKey="time" tick={{ fontSize: 10, fill: '#8da58f' }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 10, fill: '#8da58f' }} axisLine={false} tickLine={false} />
               <Tooltip content={<CustomTooltip />} />
-              <Line type="monotone" dataKey="temp"     stroke="#ef4444" strokeWidth={1.5} dot={false} name="Temp °C" />
+              <Line type="monotone" dataKey="temp" stroke="#ef4444" strokeWidth={1.5} dot={false} name="Temp °C" />
               <Line type="monotone" dataKey="humidity" stroke="#3b82f6" strokeWidth={1.5} dot={false} name="Humidity %" />
-              <Line type="monotone" dataKey="ammonia"  stroke="#FFAA00" strokeWidth={1.5} dot={false} name="Ammonia ppm" />
+              <Line type="monotone" dataKey="ammonia" stroke="#FFAA00" strokeWidth={1.5} dot={false} name="Ammonia ppm" />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -191,7 +191,7 @@ export default function Dashboard() {
             border: '1px solid rgba(255,170,0,0.25)', fontSize: '0.77rem', color: '#8a5f00',
             lineHeight: 1.5
           }}>
-            ⚠️ Week 3 spike linked to temperature anomaly on 2026-02-20. Vet visit recommended.
+            ⚠️ Week 4 spike linked to temperature anomaly on 2026-02-20. Vet visit recommended.
           </div>
         </div>
       </div>
