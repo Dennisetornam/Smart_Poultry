@@ -3,6 +3,7 @@ import {
   LayoutDashboard, BookOpen, BarChart2, Truck,
   FileText, Settings, LogOut, Leaf
 } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 const navItems = [
   { label: 'Dashboard',   icon: LayoutDashboard, to: '/dashboard' },
@@ -18,6 +19,12 @@ const bottomItems = [
 
 export default function Sidebar() {
   const navigate = useNavigate()
+  const { logout } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
 
   return (
     <aside className="sidebar">
@@ -62,7 +69,7 @@ export default function Sidebar() {
         <div
           className="nav-item"
           style={{ marginTop: 'auto', color: 'rgba(239,68,68,0.75)' }}
-          onClick={() => navigate('/')}
+          onClick={handleLogout}
         >
           <LogOut size={16} className="icon" />
           Logout
