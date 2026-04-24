@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
 import ProtectedRoute from './components/ProtectedRoute'
+import SplashScreen from './components/SplashScreen'
 import { useAuth } from './context/AuthContext'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
@@ -16,7 +18,6 @@ function PublicRoute({ children }) {
   const { token } = useAuth()
   return token ? <Navigate to="/dashboard" replace /> : children
 }
-
 
 function AppLayout({ children }) {
   return (
@@ -33,6 +34,20 @@ function AppLayout({ children }) {
 }
 
 export default function App() {
+  // Show splash only once per browser session
+  const [splashDone, setSplashDone] = useState(
+    () => sessionStorage.getItem('sp_splash_done') === '1'
+  )
+
+  if (!splashDone) {
+    return (
+      <SplashScreen onComplete={() => {
+        sessionStorage.setItem('sp_splash_done', '1')
+        setSplashDone(true)
+      }} />
+    )
+  }
+
   return (
     <BrowserRouter>
       <Routes>
