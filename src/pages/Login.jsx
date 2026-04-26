@@ -1,11 +1,19 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Leaf, Eye, EyeOff, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Leaf, Eye, EyeOff, ArrowRight, CheckCircle2, Loader2 } from 'lucide-react'
+import { useLogin } from '../hooks/auth/useLogin'
 
 export default function Login() {
   const [showPass, setShowPass] = useState(false)
   const [role, setRole] = useState('farmer')
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const { mutate: login, isPending } = useLogin()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    login({ email, password, role })
+  }
 
   const features = [
     'AI-powered egg yield forecasting (10-day)',
@@ -15,7 +23,7 @@ export default function Login() {
   ]
 
   return (
-    <div className="login-page">
+    <form className="login-page" onSubmit={handleSubmit} noValidate>
       {/* Left panel */}
       <div className="login-left">
         <div style={{ position: 'relative', zIndex: 1 }}>
@@ -131,8 +139,12 @@ export default function Login() {
             <input
               className="form-input"
               type="email"
+              id="login-email"
               placeholder="dennis@smartpoultry.gh"
-              defaultValue="dennis@smartpoultry.gh"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isPending}
+              required
             />
           </div>
 
@@ -142,11 +154,16 @@ export default function Login() {
               <input
                 className="form-input"
                 type={showPass ? 'text' : 'password'}
+                id="login-password"
                 placeholder="••••••••"
-                defaultValue="password123"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isPending}
+                required
                 style={{ paddingRight: 44 }}
               />
               <button
+                type="button"
                 onClick={() => setShowPass(!showPass)}
                 style={{
                   position: 'absolute', right: 13, top: '50%',
@@ -174,12 +191,22 @@ export default function Login() {
           </div>
 
           <button
+            type="submit"
             className="btn-primary"
-            style={{ width: '100%', justifyContent: 'center', padding: '12px' }}
-            onClick={() => navigate('/dashboard')}
+            style={{ width: '100%', justifyContent: 'center', padding: '12px', opacity: isPending ? 0.75 : 1 }}
+            disabled={isPending}
           >
-            Sign In to Dashboard
-            <ArrowRight size={16} />
+            {isPending ? (
+              <>
+                <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} />
+                Signing in…
+              </>
+            ) : (
+              <>
+                Sign In to Dashboard
+                <ArrowRight size={16} />
+              </>
+            )}
           </button>
 
           <div style={{
@@ -193,6 +220,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   )
 }

@@ -1,0 +1,189 @@
+// This is your Prisma schema file
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  MANAGER
+  WORKER
+}
+
+enum BatchStatus {
+  ACTIVE
+  COMPLETED
+  TERMINATED
+}
+
+enum DeliveryType {
+  FEED
+  MEDICATION
+  EQUIPMENT
+  OTHER
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum ReportType {
+  WEEKLY
+  MONTHLY
+  BATCH_SUMMARY
+  MORTALITY
+  CUSTOM
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(WORKER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  farms     Farm[]
+  logEntries LogEntry[]
+  deliveries Delivery[]
+  alerts    Alert[]
+  reports   Report[]
+  auditLogs AuditLog[]
+}
+
+model Farm {
+  id        String   @id @default(cuid())
+  name      String
+  location  String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  owner     User       @relation(fields: [userId], references: [id])
+  batches   Batch[]
+  deliveries Delivery[]
+  alerts    Alert[]
+  reports   Report[]
+}
+
+model Batch {
+  id           String      @id @default(cuid())
+  batchNumber  String
+  farmId       String
+  breed        String
+  initialCount Int
+  currentCount Int
+  status       BatchStatus @default(ACTIVE)
+  startDate    DateTime
+  endDate      DateTime?
+  notes        String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  farm       Farm       @relation(fields: [farmId], references: [id])
+  logEntries LogEntry[]
+  alerts     Alert[]
+}
+
+model LogEntry {
+  id               String   @id @default(cuid())
+  batchId          String
+  userId           String
+  date             DateTime @default(now())
+  mortality        Int      @default(0)
+  feedConsumption  Float    @default(0)
+  waterConsumption Float    @default(0)
+  avgWeight        Float?
+  temperature      Float?
+  humidity         Float?
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  batch  Batch @relation(fields: [batchId], references: [id])
+  loggedBy User  @relation(fields: [userId], references: [id])
+}
+
+model Delivery {
+  id           String       @id @default(cuid())
+  farmId       String
+  userId       String
+  type         DeliveryType
+  supplier     String?
+  quantity     Float
+  unit         String
+  deliveryDate DateTime
+  notes        String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relations
+  farm       Farm @relation(fields: [farmId], references: [id])
+  receivedBy User @relation(fields: [userId], references: [id])
+}
+
+model Alert {
+  id         String        @id @default(cuid())
+  farmId     String
+  batchId    String?
+  userId     String
+  type       String
+  message    String
+  severity   AlertSeverity @default(LOW)
+  isResolved Boolean       @default(false)
+  resolvedAt DateTime?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  // Relations
+  farm      Farm   @relation(fields: [farmId], references: [id])
+  batch     Batch? @relation(fields: [batchId], references: [id])
+  createdBy User   @relation(fields: [userId], references: [id])
+}
+
+model Report {
+  id        String     @id @default(cuid())
+  farmId    String
+  userId    String
+  type      ReportType
+  title     String
+  content   Json
+  startDate DateTime?
+  endDate   DateTime?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  // Relations
+  farm        Farm @relation(fields: [farmId], references: [id])
+  generatedBy User @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+}
